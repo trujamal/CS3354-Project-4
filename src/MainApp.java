@@ -6,8 +6,8 @@ import java.util.Scanner;
  * This is the main class of the ShippingStore database manager. It provides a
  * console for a user to use the 5 main commands.
  *
- * @author Junye Wen
- */
+ * @author Jamal Rasool
+ * */
 public class MainApp {
 
     /**
