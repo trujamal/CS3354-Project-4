@@ -75,7 +75,7 @@ public class PackageOrderTest {
      */
     @Test
     public void testToString() throws Exception {
-        
+
     }
 
     /**
