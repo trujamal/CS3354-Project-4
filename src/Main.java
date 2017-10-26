@@ -15,7 +15,7 @@ public class Main {
 
         Result result;
 
-        // Beging testing Package order
+        // Begining testing Package order
         result = JUnitCore.runClasses(PackageOrderTest.class);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
