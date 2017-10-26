@@ -128,10 +128,10 @@ public class PackageOrderTest {
     @Test
     public void equals() throws Exception {
         // Testing to see if its false
-        assertFalse("This is suppose to be false", defaultPack1.toString() == defaultPack2.toString());
+        assertFalse("This is suppose to be false", defaultPack1.equals(defaultPack2));
 
         // Test to see if its true or not
-        assertTrue("This is suppose to be true", defaultPack3.toString() == defaultPack4.toString());
+        assertTrue("This is suppose to be true", defaultPack3.equals(defaultPack4));
 
     }
 
