@@ -16,6 +16,8 @@ public class PackageOrderTest {
     PackageOrder defaultPack1;
     PackageOrder defaultPack2;
     PackageOrder defaultPack3;
+    PackageOrder defaultPack4;
+
 
     /**
      *
@@ -26,9 +28,10 @@ public class PackageOrderTest {
         // Creating an empty shipping store array
         shippingStore = new ShippingStore();
 
-        defaultPack1 = new PackageOrder("12345","Box", "Metro", "First", 5.0f, 53);
-        defaultPack2 = new PackageOrder("54321","Envelope", "Metro", "First", 5.0f, 53);
-        defaultPack3 = new PackageOrder("00000","Crate", "Metro", "First", 5.0f, 53);
+        defaultPack1 = new PackageOrder("12345","Box", "Metro", "First", 5.00f, 53);
+        defaultPack2 = new PackageOrder("54321","Envelope", "Metro", "First", 4.00f, 53);
+        defaultPack3 = new PackageOrder("00000","Crate", "Metro", "First", 12.00f, 53);
+        defaultPack4 = new PackageOrder("00000","Crate", "Metro", "First", 12.00f, 53);
 
     }
 
@@ -55,6 +58,8 @@ public class PackageOrderTest {
 
     @Test
     public void getTrackingNumber() throws Exception {
+        assertEquals("12345", defaultPack1.getTrackingNumber());
+
     }
 
     /**
@@ -65,6 +70,7 @@ public class PackageOrderTest {
 
     @Test
     public void getType() throws Exception {
+        assertEquals("Box", defaultPack1.getType());
     }
 
     /**
@@ -73,6 +79,7 @@ public class PackageOrderTest {
      */
     @Test
     public void getSpecification() throws Exception {
+        assertEquals("Metro", defaultPack1.getSpecification());
     }
 
     /**
@@ -81,6 +88,8 @@ public class PackageOrderTest {
      */
     @Test
     public void getMailingClass() throws Exception {
+        assertEquals("First", defaultPack1.getMailingClass());
+
     }
 
     /**
@@ -89,6 +98,7 @@ public class PackageOrderTest {
      */
     @Test
     public void getWeight() throws Exception {
+        assertEquals(4.0f, defaultPack2.getWeight(), 0.0f);
     }
 
     /**
@@ -97,7 +107,7 @@ public class PackageOrderTest {
      */
     @Test
     public void testToString() throws Exception {
-
+        assertEquals("00000 Crate Metro First 12.00 53\n", defaultPack3.toString());
     }
 
     /**
@@ -107,6 +117,7 @@ public class PackageOrderTest {
 
     @Test
     public void getVolume() throws Exception {
+        assertEquals(53, defaultPack3.getVolume(), 0.0);
     }
 
     /**
@@ -116,6 +127,12 @@ public class PackageOrderTest {
 
     @Test
     public void equals() throws Exception {
+        // Testing to see if its false
+        assertFalse("This is suppose to be false", defaultPack1.equals(defaultPack2));
+
+        // Test to see if its true or not
+        assertTrue("This is suppose to be true", defaultPack3.equals(defaultPack4));
+
     }
 
 }
