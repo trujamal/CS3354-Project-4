@@ -1,7 +1,8 @@
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -9,13 +10,9 @@ import static org.junit.Assert.*;
  */
 public class PackageOrderTest {
 
-    // Defining the shipping store class.
-    ShippingStore shippingStore;
-
     // Initalizing base packages to be made.
-    PackageOrder defaultPack1;
-    PackageOrder defaultPack2;
-    PackageOrder defaultPack3;
+    PackageOrder testPackage;
+    PackageOrder testPackage2;
 
     /**
      *
@@ -23,13 +20,8 @@ public class PackageOrderTest {
      */
     @Before
     public void setUp() throws Exception {
-        // Creating an empty shipping store array
-        shippingStore = new ShippingStore();
-
-        defaultPack1 = new PackageOrder("12345","Box", "Metro", "First", 5.0f, 53);
-        defaultPack2 = new PackageOrder("54321","Envelope", "Metro", "First", 5.0f, 53);
-        defaultPack3 = new PackageOrder("00000","Crate", "Metro", "First", 5.0f, 53);
-
+        testPackage = new PackageOrder("12345","Box", "Ground", "First", 5.00f, 53);
+        testPackage2 = new PackageOrder("12345", "Box", "Metro", "First", 4.0f, 50);
     }
 
     /**
@@ -39,11 +31,8 @@ public class PackageOrderTest {
 
     @After
     public void tearDown() throws Exception {
-
-        shippingStore = null;
-        defaultPack1 = null;
-        defaultPack2 = null;
-        defaultPack3 = null;
+        testPackage = null;
+        testPackage2 = null;
 
         System.out.println("Test Complete.");
     }
@@ -54,7 +43,8 @@ public class PackageOrderTest {
      */
 
     @Test
-    public void getTrackingNumber() throws Exception {
+    public void testGetTrackingNumber() throws Exception {
+        assertEquals("12345", testPackage.getTrackingNumber());
     }
 
     /**
@@ -62,17 +52,9 @@ public class PackageOrderTest {
      * @throws Exception
      */
 
-
     @Test
-    public void getType() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    public void getSpecification() throws Exception {
+    public void testGetType() throws Exception {
+        assertEquals("Box", testPackage.getType());
     }
 
     /**
@@ -80,7 +62,8 @@ public class PackageOrderTest {
      * @throws Exception
      */
     @Test
-    public void getMailingClass() throws Exception {
+    public void testGetSpecification() throws Exception {
+        assertEquals("Ground", testPackage.getSpecification());
     }
 
     /**
@@ -88,16 +71,36 @@ public class PackageOrderTest {
      * @throws Exception
      */
     @Test
-    public void getWeight() throws Exception {
+    public void testGetMailingClass() throws Exception {
+        assertEquals("First", testPackage.getMailingClass());
     }
 
     /**
      *
      * @throws Exception
      */
+    @Test
+    public void testGetWeight() throws Exception {
+        assertEquals(5.0f, testPackage.getWeight(), 0.0f);
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetVolume() throws Exception {
+        assertEquals(53, testPackage.getVolume());
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+
     @Test
     public void testToString() throws Exception {
-
+        assertThat("12345 Box Ground First 5.00 53\n", is(testPackage.toString()));
     }
 
     /**
@@ -106,16 +109,8 @@ public class PackageOrderTest {
      */
 
     @Test
-    public void getVolume() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-
-    @Test
-    public void equals() throws Exception {
+    public void testEquals() throws Exception {
+        assertTrue("These Tracking numbers are not equal.", testPackage.equals(testPackage2));
     }
 
 }
