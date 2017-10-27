@@ -1,6 +1,10 @@
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.io.File;
 
 import static org.junit.Assert.*;
 
@@ -12,10 +16,14 @@ public class ShippingStoreTest {
     // Defining the shipping store class.
     ShippingStore shippingStore;
 
+    private ArrayList<PackageOrder> packageOrderList;
+
     // Initalizing base packages to be made.
-    PackageOrder defaultPack1;
-    PackageOrder defaultPack2;
-    PackageOrder defaultPack3;
+    PackageOrder testPackage1;
+    PackageOrder testPackage2;
+    PackageOrder testPackage3;
+
+    private File dataFile;
 
     /**
      *
@@ -23,11 +31,11 @@ public class ShippingStoreTest {
      */
     @Before
     public void setUp() throws Exception {
-        shippingStore = new ShippingStore();
-
-        defaultPack1 = new PackageOrder("12345","Box", "Metro", "First", 5.0f, 53);
-        defaultPack2 = new PackageOrder("54321","Envelope", "Metro", "First", 5.0f, 53);
-        defaultPack3 = new PackageOrder("00000","Crate", "Metro", "First", 5.0f, 53);
+        dataFile = new File("PackageOrderDB.txt");
+        packageOrderList = new ArrayList<>();
+        testPackage1 = new PackageOrder("12345","Box", "Metro", "First", 5.0f, 53);
+        testPackage2 = new PackageOrder("54321","Envelope", "Metro", "First", 5.0f, 53);
+        testPackage3 = new PackageOrder("00000","Crate", "Metro", "First", 5.0f, 53);
     }
 
     /**
@@ -37,9 +45,9 @@ public class ShippingStoreTest {
     @After
     public void tearDown() throws Exception {
         shippingStore = null;
-        defaultPack1 = null;
-        defaultPack2 = null;
-        defaultPack3 = null;
+        testPackage1= null;
+        testPackage2 = null;
+        testPackage3 = null;
 
         // Tracking print out.
         //System.out.println("Test Complete.");
@@ -52,6 +60,7 @@ public class ShippingStoreTest {
      */
     @Test
     public void getDataFile() throws Exception {
+        assertTrue("The data file does not exist", dataFile.exists());
     }
 
     /**
@@ -60,6 +69,7 @@ public class ShippingStoreTest {
      */
     @Test
     public void showPackageOrders() throws Exception {
+
     }
 
     /**
@@ -76,6 +86,10 @@ public class ShippingStoreTest {
      */
     @Test
     public void findPackageOrder() throws Exception {
+        packageOrderList.add(testPackage3);
+        //assertEquals("The package was not found.", 0, shippingStore.findPackageOrder("00000"));
+        String test = packageOrderList.get(0).getTrackingNumber();
+        System.out.println(test);
     }
 
     /**
@@ -92,6 +106,8 @@ public class ShippingStoreTest {
      */
     @Test
     public void addOrder() throws Exception {
+        packageOrderList.add(testPackage1);
+        assertEquals(1, packageOrderList.size());
     }
 
     /**
@@ -100,6 +116,8 @@ public class ShippingStoreTest {
      */
     @Test
     public void removeOrder() throws Exception {
+        packageOrderList.remove(testPackage1);
+        assertEquals(0, packageOrderList.size());
     }
 
     /**
@@ -108,6 +126,7 @@ public class ShippingStoreTest {
      */
     @Test
     public void getPackageOrder() throws Exception {
+
     }
 
     /**

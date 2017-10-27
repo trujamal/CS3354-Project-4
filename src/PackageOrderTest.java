@@ -110,7 +110,7 @@ public class PackageOrderTest {
 
     @Test
     public void testEquals() throws Exception {
-        assertTrue("Tracking numbers are not equal", testPackage.equals(testPackage2));
+        assertTrue("These Tracking numbers are not equal.", testPackage.equals(testPackage2));
     }
 
 }
