@@ -6,6 +6,7 @@ import org.junit.runner.notification.Failure;
 
 /**
  * Designed to go through and test all of the individual test files within the system.
+ * @author Jamal Rasool
  */
 
 public class Main {

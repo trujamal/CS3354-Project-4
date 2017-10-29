@@ -9,6 +9,10 @@ import static org.junit.Assert.*;
 /**
  *The Shipping Store Test class is designed to run all of the test cases within the program, verifying that all of the
  * shippingStore.java functions are all checked.
+ * 
+ * @author Jamal Rasool
+ * @version 1.0
+ *
  */
 
 public class ShippingStoreTest {

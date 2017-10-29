@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 
 /**
  * Package order test is designed to go through and test said class
+ * @author Jamal Rasool
+ *
  */
 public class PackageOrderTest {
 
