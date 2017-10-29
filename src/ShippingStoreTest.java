@@ -47,10 +47,6 @@ public class ShippingStoreTest {
         packageOrderList.add(defaultPack2);
         packageOrderList.add(defaultPack3);
 
-        for (PackageOrder c : packageOrderList) {
-            pw.write(c.toString());
-        }
-
     }
 
     /**
@@ -68,6 +64,7 @@ public class ShippingStoreTest {
         defaultPack3 = null;
         defaultPack4 = null;
         dataFile = null;
+        pw = null;
 
         // System.out.println("Test Complete.");
     }
@@ -89,6 +86,9 @@ public class ShippingStoreTest {
     @Test
     @SuppressWarnings("Duplicates")
     public void showPackageOrders() throws Exception {
+        assertTrue("Package orders do exist", packageOrderList.size() >= 1 && packageOrderList.get(0).getTrackingNumber() == "12345");
+        assertFalse("No package order exit",packageOrderList.size() < 1);
+
     }
 
     /**
@@ -97,6 +97,9 @@ public class ShippingStoreTest {
      */
     @Test
     public void showPackageOrdersRange() throws Exception {
+        assertTrue("Package orders do exist", packageOrderList.size() >= 1);
+        assertFalse("No package order exit",packageOrderList.size() < 1);
+
     }
 
     /**
@@ -164,8 +167,8 @@ public class ShippingStoreTest {
     @Test
     public void read() throws Exception {
         // Checking to see if what we wrote to the file was written properly
-
-
+        assertTrue("File could be opened",dataFile.exists());
+        assertFalse("File couldn't be opened, possibly doesn't exit",!dataFile.exists());
     }
 
     /**
@@ -175,8 +178,7 @@ public class ShippingStoreTest {
     @Test
     public void flush() throws Exception {
         //String reader/string writer
-        assertTrue("f", pw.equals(defaultPack1));
-
+        assertTrue("File can be written to", pw.checkError() == false);
+        assertFalse("Error file could not be written to", pw.checkError() == true);
     }
-
 }
