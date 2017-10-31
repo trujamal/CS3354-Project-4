@@ -16,12 +16,6 @@ public class Main {
 
         Result result;
 
-        // Begining testing Package order
-        result = JUnitCore.runClasses(PackageOrderTest.class);
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure.toString());
-        }
-
         // Beging testing Shippingstore class
         result = JUnitCore.runClasses(ShippingStoreTest.class);
         for (Failure failure : result.getFailures()) {

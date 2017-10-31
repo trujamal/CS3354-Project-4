@@ -1,10 +1,16 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.*;
 import java.io.File;
+import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
+import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
+import java.nio.channels.Channels;
 
 /**
  *The Shipping Store Test class is designed to run all of the test cases within the program, verifying that all of the
@@ -94,6 +100,17 @@ public class ShippingStoreTest {
         assertTrue("Package orders do exist", packageOrderList.size() >= 1 && packageOrderList.get(0).getTrackingNumber() == "12345");
         assertFalse("No package order exit",packageOrderList.size() < 1);
 
+        String staticInfo = "";
+        staticInfo += " -------------------------------------------------------------------------- \n";
+        staticInfo += "| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |\n";
+        staticInfo += " -------------------------------------------------------------------------- \n";
+        staticInfo += "| GFR23      | Box     | Books         | Retail      | 9500.00    | 45     |\n";
+        staticInfo += " --------------------------------------------------------------------------\n";
+
+
+
+
+
     }
 
     /**
@@ -176,26 +193,50 @@ public class ShippingStoreTest {
 
     /**
      * Designed to read user input from the file, and also test to see if the information in the file is readable.
+     * The program will first go through and see if said file is located inside of the directory or not, if its not then
+     * it will throw the exception where the file is not found, then finally go through with the case that it is true.
      * @throws Exception The exception is being returned as the assert true and false.
      */
     @Test
     public void read() throws Exception {
-        dataFile = new File("PackageOrderDB.txt");
-        // Checking to see if what we wrote to the file was written properly
-        assertTrue("Information is readable", dataFile.canRead());
-        assertTrue("File could be opened",dataFile.exists());
-        assertFalse("File couldn't be opened, possibly doesn't exit",!dataFile.exists());
+
+        try
+        {// Checking to see if what we wrote to the file was written properly
+            FileReader dataReader = new FileReader("test.txt");
+            shippingStore.read(dataReader);
+
+        } catch (Exception e) {
+
+            assertEquals("java.io.FileNotFoundException: test.txt (No such file or directory)",e.toString());
+
+        }finally{
+            dataFile = new File("PackageOrderDB.txt");
+            assertTrue("Information is readable", dataFile.canRead());
+            assertTrue("File could be opened",dataFile.exists());
+        }
     }
 
     /**
-     * Designed to verify if there was any errors in writing to the file, the serializable objects.
+     * Designed to verify if there was any errors in writing to the file, the serializable objects. Tested to see if the
+     * test file could be read, couldn't due to it being a read only file.
      * @throws Exception The exception is being returned as the assert true and false.
      */
     @Test
     public void flush() throws Exception {
-        pw = new PrintWriter("PackageOrderDB.txt");
-        //String reader/string writer
-        assertTrue("File can be written to", !pw.checkError()); // Checking if its false
-        assertFalse("Error file could not be written to", pw.checkError()); // Checking if its true
+
+        try{
+            RandomAccessFile raFile = new RandomAccessFile("test.txt", "r");
+            OutputStreamWriter writer = new OutputStreamWriter(Channels.newOutputStream(raFile.getChannel()));
+            shippingStore.flush(writer);
+
+        } catch (Exception e) {
+
+            assertEquals("java.io.FileNotFoundException: test.txt (No such file or directory)",e.toString());
+
+        } finally {
+            pw = new PrintWriter("PackageOrderDB.txt");
+            assertTrue("File can be written to", !pw.checkError()); // Checking if its false
+            assertFalse("Error file could not be written to", pw.checkError()); // Checking if its true
+        }
     }
 }
