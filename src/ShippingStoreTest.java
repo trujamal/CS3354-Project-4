@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  *The Shipping Store Test class is designed to run all of the test cases within the program, verifying that all of the
  * shippingStore.java functions are all checked.
- * 
+ *
  * @author Jamal Rasool
  * @version 1.0
  *
@@ -38,10 +38,8 @@ public class ShippingStoreTest {
     @Before
     public void setUp() throws Exception {
         // Creating an empty shipping store array
-        dataFile = new File("PackageOrderDB.txt");
         shippingStore = new ShippingStore();
         packageOrderList = new ArrayList<>();
-         pw = new PrintWriter("PackageOrderDB.txt");
 
         defaultPack1 = new PackageOrder("12345","Box", "Metro", "First", 5.00f, 63);
         defaultPack2 = new PackageOrder("54321","Envelope", "Metro", "First", 4.00f, 53);
@@ -80,6 +78,7 @@ public class ShippingStoreTest {
      */
     @Test
     public void getDataFile() throws Exception {
+        dataFile = new File("PackageOrderDB.txt");
         assertTrue("The file exist is true", dataFile.exists());
         assertFalse("The file does not exist", !dataFile.exists());
     }
@@ -181,6 +180,7 @@ public class ShippingStoreTest {
      */
     @Test
     public void read() throws Exception {
+        dataFile = new File("PackageOrderDB.txt");
         // Checking to see if what we wrote to the file was written properly
         assertTrue("Information is readable", dataFile.canRead());
         assertTrue("File could be opened",dataFile.exists());
@@ -193,6 +193,7 @@ public class ShippingStoreTest {
      */
     @Test
     public void flush() throws Exception {
+        pw = new PrintWriter("PackageOrderDB.txt");
         //String reader/string writer
         assertTrue("File can be written to", !pw.checkError()); // Checking if its false
         assertFalse("Error file could not be written to", pw.checkError()); // Checking if its true
