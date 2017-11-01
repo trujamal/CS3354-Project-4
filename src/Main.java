@@ -6,6 +6,7 @@ import org.junit.runner.notification.Failure;
 
 /**
  * Designed to go through and test all of the individual test files within the system.
+ * @author Jamal Rasool
  */
 
 public class Main {
@@ -14,12 +15,6 @@ public class Main {
     public void main() throws Exception {
 
         Result result;
-
-        // Beging testing Package order
-        result = JUnitCore.runClasses(PackageOrderTest.class);
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure.toString());
-        }
 
         // Beging testing Shippingstore class
         result = JUnitCore.runClasses(ShippingStoreTest.class);

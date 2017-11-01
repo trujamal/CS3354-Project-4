@@ -1,18 +1,25 @@
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.hamcrest.CoreMatchers.*;
+
 import static org.junit.Assert.*;
 
 /**
  * Package order test is designed to go through and test said class
+ * @author Jamal Rasool
+ *
  */
 public class PackageOrderTest {
 
+    // Defining the shipping store class.
+    ShippingStore shippingStore;
+
     // Initalizing base packages to be made.
-    PackageOrder testPackage;
-    PackageOrder testPackage2;
+    PackageOrder defaultPack1;
+    PackageOrder defaultPack2;
+    PackageOrder defaultPack3;
+    PackageOrder defaultPack4;
+
 
     /**
      *
@@ -20,8 +27,14 @@ public class PackageOrderTest {
      */
     @Before
     public void setUp() throws Exception {
-        testPackage = new PackageOrder("12345","Box", "Ground", "First", 5.00f, 53);
-        testPackage2 = new PackageOrder("12345", "Box", "Metro", "First", 4.0f, 50);
+        // Creating an empty shipping store array
+        shippingStore = new ShippingStore();
+
+        defaultPack1 = new PackageOrder("12345","Box", "Metro", "First", 5.00f, 53);
+        defaultPack2 = new PackageOrder("54321","Envelope", "Metro", "First", 4.00f, 53);
+        defaultPack3 = new PackageOrder("00000","Crate", "Metro", "First", 12.00f, 53);
+        defaultPack4 = new PackageOrder("00000","Crate", "Metro", "First", 12.00f, 53);
+
     }
 
     /**
@@ -31,8 +44,11 @@ public class PackageOrderTest {
 
     @After
     public void tearDown() throws Exception {
-        testPackage = null;
-        testPackage2 = null;
+
+        shippingStore = null;
+        defaultPack1 = null;
+        defaultPack2 = null;
+        defaultPack3 = null;
 
         System.out.println("Test Complete.");
     }
@@ -43,8 +59,9 @@ public class PackageOrderTest {
      */
 
     @Test
-    public void testGetTrackingNumber() throws Exception {
-        assertEquals("12345", testPackage.getTrackingNumber());
+    public void getTrackingNumber() throws Exception {
+        assertEquals("12345", defaultPack1.getTrackingNumber());
+
     }
 
     /**
@@ -52,18 +69,10 @@ public class PackageOrderTest {
      * @throws Exception
      */
 
-    @Test
-    public void testGetType() throws Exception {
-        assertEquals("Box", testPackage.getType());
-    }
 
-    /**
-     *
-     * @throws Exception
-     */
     @Test
-    public void testGetSpecification() throws Exception {
-        assertEquals("Ground", testPackage.getSpecification());
+    public void getType() throws Exception {
+        assertEquals("Box", defaultPack1.getType());
     }
 
     /**
@@ -71,8 +80,8 @@ public class PackageOrderTest {
      * @throws Exception
      */
     @Test
-    public void testGetMailingClass() throws Exception {
-        assertEquals("First", testPackage.getMailingClass());
+    public void getSpecification() throws Exception {
+        assertEquals("Metro", defaultPack1.getSpecification());
     }
 
     /**
@@ -80,8 +89,9 @@ public class PackageOrderTest {
      * @throws Exception
      */
     @Test
-    public void testGetWeight() throws Exception {
-        assertEquals(5.0f, testPackage.getWeight(), 0.0f);
+    public void getMailingClass() throws Exception {
+        assertEquals("First", defaultPack1.getMailingClass());
+
     }
 
     /**
@@ -89,18 +99,17 @@ public class PackageOrderTest {
      * @throws Exception
      */
     @Test
-    public void testGetVolume() throws Exception {
-        assertEquals(53, testPackage.getVolume());
+    public void getWeight() throws Exception {
+        assertEquals(4.0f, defaultPack2.getWeight(), 0.0f);
     }
 
     /**
      *
      * @throws Exception
      */
-
     @Test
     public void testToString() throws Exception {
-        assertThat("12345 Box Ground First 5.00 53\n", is(testPackage.toString()));
+        assertEquals("00000 Crate Metro First 12.00 53\n", defaultPack3.toString());
     }
 
     /**
@@ -109,8 +118,23 @@ public class PackageOrderTest {
      */
 
     @Test
-    public void testEquals() throws Exception {
-        assertTrue("These Tracking numbers are not equal.", testPackage.equals(testPackage2));
+    public void getVolume() throws Exception {
+        assertEquals(53, defaultPack3.getVolume(), 0.0);
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+
+    @Test
+    public void equals() throws Exception {
+        // Testing to see if its false
+        assertFalse("This is suppose to be false", defaultPack1.equals(defaultPack2));
+
+        // Test to see if its true or not
+        assertTrue("This is suppose to be true", defaultPack3.equals(defaultPack4));
+
     }
 
 }
