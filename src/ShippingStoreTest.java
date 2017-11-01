@@ -3,13 +3,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
-import java.io.OutputStreamWriter;
-import java.io.RandomAccessFile;
+
 import java.nio.channels.Channels;
 
 /**
@@ -74,8 +71,6 @@ public class ShippingStoreTest {
         defaultPack4 = null;
         dataFile = null;
         pw = null;
-
-        // System.out.println("Good");
     }
 
     /**
@@ -97,20 +92,34 @@ public class ShippingStoreTest {
     @Test
     @SuppressWarnings("Duplicates")
     public void showPackageOrders() throws Exception {
-        assertTrue("Package orders do exist", packageOrderList.size() >= 1 && packageOrderList.get(0).getTrackingNumber() == "12345");
-        assertFalse("No package order exit",packageOrderList.size() < 1);
 
-        String staticInfo = "";
+        OutputStream os = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(os);
+        PrintStream originalOut = System.out;
+
+        String staticInfo = "Package Order has been added.\n\n";
         staticInfo += " -------------------------------------------------------------------------- \n";
         staticInfo += "| Tracking # | Type    | Specification | Class       | Weight(oz) | Volume |\n";
         staticInfo += " -------------------------------------------------------------------------- \n";
         staticInfo += "| GFR23      | Box     | Books         | Retail      | 9500.00    | 45     |\n";
-        staticInfo += " --------------------------------------------------------------------------\n";
+        staticInfo += " --------------------------------------------------------------------------\n\n";
 
+        try {
+            System.setOut(ps);
 
+            shippingStore.addOrder("GFR23", "Box", "Books",
+                    "Retail", "9500.00", "45");
+            shippingStore.showPackageOrders();
+            System.out.flush();
+            System.setOut(originalOut);
+            assertEquals(staticInfo,os.toString());
 
-
-
+        } catch (Exception e) {
+            fail("String does not match with statement above");
+        } finally {
+            assertTrue("Package orders do exist", packageOrderList.size() >= 1 && packageOrderList.get(0).getTrackingNumber() == "12345");
+            assertFalse("No package order exit",packageOrderList.size() < 1);
+        }
     }
 
     /**
